@@ -1,3 +1,7 @@
+import SummarizeBot
+
 def main():
-    print('hello world')
+    SummarizeBot.summarizer()
+
+main()
 
