@@ -1,21 +1,8 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
-# from pprint import pprint
-# import nltk
-# import json
-# nltk.download('stopwords')
-# from Questgen import main
-
-# f = open('payload.json')
-# payload = json.load(f)
-
-# payload = {
-#     "input_text": payload['text']
-# }
-
-# qg = main.QGen()
-# output = qg.predict_shortq(payload)
-# pprint(output)
+import gensim
+import warcio
+from io import BytesIO
 
 # Create a new chatbot
 chatbot = ChatBot("Educational Chatbot")
@@ -35,6 +22,14 @@ list_trainer.train([
     "When was the book published?", "The book was published in Z",
     "Hello, how are you today?", "I am really W, how about K"
     ])
+exit_conditions = (":q", " quit", " exit")
 # Get a response to an input statement
-response = chatbot.get_response("Hello, how are you today?")
-print(response)
+
+print('The exit commands are: ' + exit_conditions[0] + exit_conditions[1] + exit_conditions[2])
+while True:
+    
+    query = input("> ")
+    if query in exit_conditions:
+        break
+    else:
+        print(f"BOT: {chatbot.get_response(query)}")
