@@ -8,14 +8,56 @@ import nltk
 import json
 nltk.download('stopwords')
 from Questgen import main
+import re
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 
-f = open('payload.json')
-payload = json.load(f)
 
-payload = {
-    "input_text": payload['text']
-}
+def questionGeneratorWhole():
+    f = open('payload.json')
+    payload = json.load(f)
 
-qg = main.QGen()
-output = qg.predict_shortq(payload)
-pprint(output)
+    payload = {
+        "input_text": payload['text']
+    }
+
+    qg = main.QGen()
+    output = qg.predict_shortq(payload)
+    pprint(output)
+
+
+def preprocess_text():
+
+    f = open('payload.json')
+    payload = json.load(f)
+
+
+    text = payload['text']
+
+    # Convert to lowercase
+    text = text.lower()
+    
+    # Remove punctuation
+    text = re.sub(r'[^\w\s]', '', text)
+    
+    # Remove numbers
+    text = re.sub(r'\d+', '', text)
+    
+    # Tokenize
+    tokens = nltk.word_tokenize(text)
+    
+    # Remove stop words
+    stop_words = set(stopwords.words('english'))
+    tokens = [token for token in tokens if token not in stop_words]
+    
+    # Stem tokens
+    stemmer = PorterStemmer()
+    tokens = [stemmer.stem(token) for token in tokens]
+    
+    # Rejoin tokens
+    text = ' '.join(tokens)
+    print(text)
+    return text
+
+preprocess_text()
+
