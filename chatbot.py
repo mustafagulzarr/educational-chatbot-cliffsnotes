@@ -1,6 +1,5 @@
 from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer, UbuntuCorpusTrainer
-from io import BytesIO
+from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 import preproccesser
 
 # Create a new chatbot
@@ -8,8 +7,6 @@ chatbot = ChatBot(name='Educational Chatbot', read_only=True, logic_adapters=['c
 
 # Create a new trainer
 corpus_trainer = ChatterBotCorpusTrainer(chatbot)
-ubuntu_trainer = UbuntuCorpusTrainer(chatbot)
-ubuntu_trainer.train()
 
 # Now let's train the bot on the english corpus
 corpus_trainer.train("chatterbot.corpus.english.greetings",
@@ -27,7 +24,7 @@ list_trainer.train([
 whole_text = preproccesser.questionGeneratorWhole('payload.json')
 list_trainer.train(whole_text)
 
-preproccess_text = preproccesser.preprocess_text('payload.json')
+# preproccess_text = preproccesser.preprocess_text('payload.json')
 # corpus_trainer.train(preproccess_text)
 ################################################################################################
 

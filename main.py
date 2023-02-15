@@ -1,7 +1,7 @@
-import SummarizeBot
+import Summarize
 
 def main():
-    SummarizeBot.summarizer()
+    Summarize.summarizer_openai()
 
 main()
 
