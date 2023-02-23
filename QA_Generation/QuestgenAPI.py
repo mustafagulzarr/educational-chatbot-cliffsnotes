@@ -10,23 +10,47 @@ from Questgen import main
 import re
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+from SummarizeTLDR import summarizer_tldr
+from SummarizeTextRank import generate_summary
 
+# def questionGeneratorWhole():
+#     summary = summarizer_tldr()
+#     output=[]
+#     for i in summary:
+#         payload = {
+#         "input_text": i
+#         }
+#         qg = main.QGen()
+#         output.append(qg.predict_shortq(payload, 4))
+#     result = []
+#     # print(output)
+#     for i in range(len(output['questions'])):
+#         result.append(output['questions'][i]['Question'])
+#         result.append(output['questions'][i]['Answer'])
+#     with open("QuestionsQuestgen.txt", "w") as f:
+#         f.write('Question' + output['questions'][i]['Question'] + '\n')
+#         f.write('Answer:' + output['questions'][i]['Answer'] + '\n')
+#     return result
 
-def questionGeneratorWhole(filename):
-    f = open(filename)
-    payload = json.load(f)
-
-    payload = {
-        "input_text": payload['text']
-    }
-
-    qg = main.QGen()
-    output = qg.predict_shortq(payload)
+def questionGeneratorWhole():
+    file = open('book.txt','r')
+    contents= file.read()
+    summary = generate_summary(contents)
+    output=[]
+    for i in summary:
+        payload = {
+        "input_text": i
+        }
+        qg = main.QGen()
+        output.append(qg.predict_shortq(payload, 4))
     result = []
-
+    # print(output)
     for i in range(len(output['questions'])):
         result.append(output['questions'][i]['Question'])
         result.append(output['questions'][i]['Answer'])
+    with open("QuestionsQuestgen.txt", "w") as f:
+        f.write('Question' + output['questions'][i]['Question'] + '\n')
+        f.write('Answer:' + output['questions'][i]['Answer'] + '\n')
     return result
 
 
@@ -66,4 +90,5 @@ def preprocess_text(filename):
         f.write(text)
 
     return './file.txt'
+questionGeneratorWhole()
 

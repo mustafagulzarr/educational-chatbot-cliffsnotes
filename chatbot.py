@@ -1,6 +1,6 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
-import preproccesser
+from QA_Generation import QuestgenAPI
 
 # Create a new chatbot
 chatbot = ChatBot(name='Educational Chatbot', read_only=True, logic_adapters=['chatterbot.logic.BestMatch'])
@@ -21,11 +21,11 @@ list_trainer.train([
     "Hello, how are you today?", "I am really W, how about K"
     ])
 
-whole_text = preproccesser.questionGeneratorWhole('payload.json')
+whole_text = QuestgenAPI.questionGeneratorWhole('payload.json')
 list_trainer.train(whole_text)
 
-# preproccess_text = preproccesser.preprocess_text('payload.json')
-# corpus_trainer.train(preproccess_text)
+preproccess_text = QuestgenAPI.preprocess_text('payload.json')
+corpus_trainer.train(preproccess_text)
 ################################################################################################
 
 exit_conditions = (":q", " quit", " exit")
@@ -33,7 +33,6 @@ exit_conditions = (":q", " quit", " exit")
 
 print('The exit commands are: ' + exit_conditions[0] + exit_conditions[1] + exit_conditions[2])
 while True:
-    
     query = input("> ")
     if query in exit_conditions:
         break
