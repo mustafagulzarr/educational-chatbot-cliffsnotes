@@ -9,7 +9,7 @@ certifi==2022.12.7
 cffi==1.14.0
 chardet==3.0.4
 charset-normalizer==3.0.1
-ChatterBot==1.1.0a7
+ChatterBot
 chatterbot-corpus==1.2.0
 click==8.1.3
 confection==0.0.4
@@ -22,7 +22,7 @@ Flask-SocketIO==4.3.0
 fst-pso==1.8.1
 future==0.16.0
 FuzzyTM==2.0.5
-gensim==4.3.0
+gensim
 gingerit==0.8.0
 gunicorn==20.0.4
 idna==3.4
@@ -43,9 +43,9 @@ packaging==20.4
 pandas==1.3.5
 pathy==0.10.1
 pdfminer==20191125
-Pint==0.20.1
+Pint
 pipenv==2022.1.8
-pke==2.0.0
+#pke
 preshed==3.0.8
 pycparser==2.20
 pycryptodome==3.9.7
@@ -71,7 +71,7 @@ six==1.15.0
 sklearn==0.0.post1
 smart-open==6.3.0
 soupsieve==2.3.2.post1
-spacy==3.5.0
+spacy
 spacy-legacy==3.0.12
 spacy-loggers==1.0.4
 SQLAlchemy==1.3.24
