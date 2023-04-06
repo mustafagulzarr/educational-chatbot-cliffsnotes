@@ -21,7 +21,7 @@ To use the project, follow these steps:
 4. Install the requirements:
     pip install --no-deps -r requirements.txt
 
-5. Navigate to the `app/` directory:
+5. Navigate to the app directory:
     cd app/
 
 6. Run the Flask application by executing the following command:
