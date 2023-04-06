@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Chatbot</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f5f5f5;
+        background-image: url("{{ url_for('static', filename='bg2.jpg') }}");
+        background-size: cover;
+        background-position: center 50px;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #8c7257;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #b2aca0;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        margin-top: 210px; /* adjust this value to the height of your header */
+      }
+
+      button {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #222;
+      }
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      ul {
+        list-style: disc;
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      .container .greeting {
+        text-align: center;
+      }
+      .container .upload_button {
+        align: center;
+        margin-left: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CliffsNotes Bot</h1>
+      <p>A chatbot created by Mustafa Gulzar</p>
+    </header>
+    <div class="container">
+      <h2 class="greeting">Welcome to My Educational Chatbot! (CliffsNotes Variant)</h2>
+      <p>This chatbot is designed to answer questions based on a given text. Here's how it works:</p>
+      <ul>
+        <li>Click the button below to upload the text you want to use.</li>
+        <li>Once the text is uploaded, you will be redirected to the chatbot screen.</li>
+        <li>There will be a prompt for you to ask your questions to the chatbot.</li>
+      </ul>
+      <a class="upload_button" href="/upload"><button>Upload Text</button></a>
+    </div>
+  </body>
+</html>

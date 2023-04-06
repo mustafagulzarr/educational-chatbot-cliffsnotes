@@ -1,10 +1,14 @@
+#below is the code to fine tune the model on a particular dataset to align the model more towards the book summarization use case. In this project, the model could not be fine-tuned due to hardware restrictions as a strong GPU is needed to compute the fine-tuned model in reasonable.
+
+
+
 # import torch
-# from transformers import PegasusForConditionalGeneration, PegasusTokenizer, DataCollatorForLanguageModeling, Trainer, TrainingArguments
-# def PegasusFineTune():
-#     # Load the Pegasus model and tokenizer
-#     model_name = 'google/pegasus-xsum'
-#     model = PegasusForConditionalGeneration.from_pretrained(model_name)
-#     tokenizer = PegasusTokenizer.from_pretrained(model_name)
+# from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, Trainer, TrainingArguments
+# def BartFineTune():
+#     # Load the BART model and tokenizer
+# tokenizer = AutoTokenizer.from_pretrained("slauw87/bart_summarisation")
+
+# model = AutoModelForSeq2SeqLM.from_pretrained("slauw87/bart_summarisation")
 
 #     # Load the book summary dataset
 #     dataset_path = 'Data/booksummaries.txt'
@@ -41,9 +45,9 @@
 
 #     # Instantiate a Trainer
 #     trainer = Trainer(
-#         model=model,                       # the instantiated 🤗 Transformers model to be trained
-#         args=training_args,                # training arguments, defined above
-#         train_dataset=input_sequences,     # training dataset
+#         model=model,                 
+#         args=training_args,               
+#         train_dataset=input_sequences,     
 #         data_collator=data_collator
 #     )
 
@@ -51,20 +55,23 @@
 #     trainer.train()
 
 #     # Save the fine-tuned model
-#     model.save_pretrained('./fine_tuned_pegasus')
-#     tokenizer.save_pretrained('./fine_tuned_pegasus')
+    # model.save_pretrained('./fine_tuned_bart')
+    # tokenizer.save_pretrained('./fine_tuned_bart')
 
 
 
-import torch
-from transformers import BartForConditionalGeneration, BartTokenizer, DataCollatorForLanguageModeling, Trainer, TrainingArguments
-from rouge_score import rouge_scorer
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+from nltk.translate.meteor_score import single_meteor_score
+
+# Load the BART model and tokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("slauw87/bart_summarisation")
+
+model = AutoModelForSeq2SeqLM.from_pretrained("slauw87/bart_summarisation")
 
 def generate_summary(text):
-    # Load the BART model and tokenizer
-    model_name = "facebook/bart-large-cnn"
-    model = BartForConditionalGeneration.from_pretrained(model_name)
-    tokenizer = BartTokenizer.from_pretrained(model_name)
+
 
     # Split the input text into chunks of at most 1024 tokens (BART has a maximum input length of 1024 tokens)
     text_chunks = [text[i:i + 1024] for i in range(0, len(text), 1024)]
@@ -85,26 +92,12 @@ def generate_summary(text):
         # Decode the summary and append to the list of summary chunks
         summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
         summary_chunks.append(summary)
-        print(summary)
     
 
     # Join the summary chunks into a single summary
     summary = ' '.join(summary_chunks)
-    # Calculate ROUGE score between generated summary and original text
-    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
-    scores = scorer.score(summary, text)
-
-    # Print ROUGE scores
-    print('ROUGE-1:', scores['rouge1'].fmeasure)
-    print('ROUGE-2:', scores['rouge2'].fmeasure)
-    print('ROUGE-L:', scores['rougeL'].fmeasure)
 
     return summary
-
-
-
-
-# PegasusFineTune()
 
 
 

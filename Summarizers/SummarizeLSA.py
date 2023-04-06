@@ -1,16 +1,53 @@
-import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import TruncatedSVD
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import heapq
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+from nltk.translate.meteor_score import single_meteor_score
+from rouge_score import rouge_scorer
 
-def generate_summary(text):
-    # Load the T5 model and tokenizer
-    model = T5ForConditionalGeneration.from_pretrained('t5-base')
-    tokenizer = T5Tokenizer.from_pretrained('t5-base')
+def preprocess_text(text):
+    stop_words = set(stopwords.words('english'))
+    wordnet_lemmatizer = WordNetLemmatizer()
 
-    # Tokenize the input text and append the special tokens
-    inputs = tokenizer.encode("summarize: " + text, return_tensors="pt")
+    words = word_tokenize(text.lower())
+    words = [word for word in words if word.isalnum() and word not in stop_words]
+    words = [wordnet_lemmatizer.lemmatize(word) for word in words]
 
-    # Generate the summary output using the T5 model
-    summary_ids = model.generate(inputs, max_length=150, num_beams=2, early_stopping=True)
-    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+    return ' '.join(words)
+
+def summarize_text(text, num_sentences):
+    sentences = sent_tokenize(text)
+    preprocessed_sentences = [preprocess_text(sentence) for sentence in sentences]
+
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(preprocessed_sentences)
+
+    svd = TruncatedSVD(n_components=1)
+    X_svd = svd.fit_transform(X)
+
+    sentence_scores = {}
+    for i, sentence in enumerate(sentences):
+        sentence_scores[sentence] = X_svd[i][0]
+
+    summarized_sentences = heapq.nlargest(num_sentences, sentence_scores, key=sentence_scores.get)
+    summary = ' '.join(summarized_sentences)
+
 
     return summary
+
+
+
+# # Replace the text below with the content of your book chapter.
+# book_chapter = open('Data/input.txt','r').read()
+
+# # Set the number of sentences you want in the summary.
+# num_summary_sentences = 200
+
+# summary = summarize_text(book_chapter, num_summary_sentences)
+# print(summary)
+
+
+

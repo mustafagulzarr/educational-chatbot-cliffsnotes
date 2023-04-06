@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Chatbot</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f5f5f5;
+        background-image: url("{{ url_for('static', filename='bg2.jpg') }}");
+        background-size: cover;
+        background-position: center 50px;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #8c7257;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #b2aca0;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        margin-top: 50px;
+      }
+
+      .chatbox {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        height: 600px;
+        overflow-y: scroll;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .chatbox .message {
+        margin-bottom: 10px;
+      }
+
+      .chatbox .message .user {
+        font-weight: bold;
+      }
+
+      .chatbox .message .bot {
+        font-style: italic;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        width: 70%;
+      }
+
+      button {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        margin-left: 10px;
+      }
+
+      button:hover {
+        background-color: #222;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CliffsNotes Chatbot</h1>
+    </header>
+    <div class="container">
+      <div class="chatbox">
+        {% for message in user_message_list %}
+        <div class="message">
+          <p> {{message}} </p>
+          {% if message[0] == "You" %}
+            <span class="user">You: {{ message[0] }}:</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      
+      </div>
+      <form id="chat-form" method="POST" action="{{ url_for('chatbot') }}">
+        <input type="text" name="user-input" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.querySelector('#chat-form');
+      const chatbox = document.querySelector('.chatbox');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = form.querySelector('input[name="user-input"]');
+        const message = document.createElement('div');
+        message.classList.add('message');
+        message.innerHTML = `<span class="user">${input.value}</span>`;
+        chatbox.appendChild(message);
+        input.value = '';
+      });

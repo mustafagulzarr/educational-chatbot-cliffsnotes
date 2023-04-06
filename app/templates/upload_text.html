@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CliffsNotes Bot - Upload Text</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        color: #333;
+        background-color: #b2aca0;
+        background-image: url("{{ url_for('static', filename='bg2.jpg') }}");
+        background-size: cover;
+        background-position: center 50px;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #8c7257;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+        margin-top: 190px;
+        background-color: #b2aca0;
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CliffsNotes Bot</h1>
+      <p>A chatbot created by Mustafa Gulzar</p>
+    </header>
+    <div class="container">
+      <h2>Upload Text</h2>
+      <form action="" method="post">
+        <label for="text">Enter your text:</label><br>
+        <textarea id="text" name="text" rows="10" cols="80"></textarea><br><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
+</html>
