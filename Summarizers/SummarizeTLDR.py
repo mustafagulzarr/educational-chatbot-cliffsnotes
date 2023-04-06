@@ -1,13 +1,11 @@
-import requests
 import json
-
-
+import requests
 
 def summarizer_tldr():
     url = "https://tldrthis.p.rapidapi.com/v1/model/extractive/summarize-text/"
     f = open('payload.json')
     payload = json.load(f)
-    text = open('book.txt', 'r')
+    text = open('Data/input.txt', 'r')
     contents = text.read()
     payload['text'] = contents
 
@@ -18,13 +16,8 @@ def summarizer_tldr():
     }
 
     response = requests.request("POST", url, json=payload, headers=headers)
-
-    return response.json()['summary']
-
-
+    result = response.json()['summary']
+    extract = ''.join(result)
 
 
-
-
-
-
+    return extract
